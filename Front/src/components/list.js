@@ -3,7 +3,13 @@ import Task from "./task";
 import Bottom from "./bottom";
 
 function List(props) {
-  const tasks = props.data;
+  console.log(props.data);
+  var tasks;
+  if (props.category !== "All") {
+    tasks = props.data.filter((data) => data.category === props.category);
+  } else {
+    tasks = props.data;
+  }
   console.log(tasks);
   return (
     <div className="flex">
