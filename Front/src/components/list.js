@@ -5,6 +5,8 @@ import Bottom from "./bottom";
 function List(props) {
   const tasks = props.data;
   console.log(tasks);
+
+  console.log("Hello world");
   return (
     <div className="flex">
       <div className="Box" id="heading">
