@@ -1,0 +1,49 @@
+import React from "react";
+import Task from "./task";
+import Bottom from "./bottom";
+
+function List(props) {
+  const tasks = props.data;
+  console.log(tasks);
+  return (
+    <div className="flex">
+      <div className="Box" id="heading">
+        {props.deletemode ? <h2>Delete Task</h2> : <h2>{props.category}</h2>}
+      </div>
+
+      {tasks &&
+        tasks.map((tasks, index) => {
+          return (
+            <Task
+              key={tasks.id}
+              title={tasks.title}
+              description={tasks.description}
+              date={tasks.date}
+              time={tasks.time}
+              id={tasks.id}
+              showadd={props.showadd}
+              setShowAdd={props.setShowAdd}
+              deletemode={props.deletemode}
+              tasks={props.tasks}
+              setTask={props.setTask}
+              editmode={props.editmode}
+              setEditMode={props.setEditMode}
+              editid={props.editid}
+              setEditId={props.setEditId}
+            />
+          );
+        })}
+
+      <Bottom
+        showadd={props.showadd}
+        setShowAdd={props.setShowAdd}
+        deletemode={props.deletemode}
+        setDeleteMode={props.setDeleteMode}
+        editmode={props.editmode}
+        setEditMode={props.setEditMode}
+      />
+    </div>
+  );
+}
+
+export default List;

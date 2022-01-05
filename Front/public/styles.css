@@ -1,0 +1,133 @@
+header {
+    background-color: #f5ba13;
+    margin: auto -16px;
+    padding: 16px 32px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  }
+
+body {
+    background-color: #E4E9FD;
+    /* background:linear-gradient(65deg, #c4d7e6 0, #c4d7e6 33%, #66a5ad 33%, #66a5ad 66%, #ff0000 66%, #ff0000 100%); */
+    background-image: -webkit-linear-gradient(75deg, #A683E3 0%, #A683E3 33%, #E4E9FD 33%, #E4E9FD 66%, #F2789F 66%, #F2789F 100%);
+    min-height: 1000px;
+    font-family: 'helvetica neue';
+  }
+
+Nav.Link{
+  color: white;
+  }
+
+
+
+  .box {
+    max-width: 400px;
+    margin: 50px auto;
+    border-radius: 7px;
+    box-shadow: 0 2px 5px #ccc;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: translateZ(-50px);
+  }
+  
+  #heading {
+    background-color: #A683E3;
+    text-align: center;
+  }
+
+  #item {
+    background-color: #FBFFE2;
+    min-height: 70px;
+    align-items: center;
+    border-bottom: 1px solid black;
+    display: flex;
+    padding-left:10px;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    cursor: pointer;
+  }
+
+
+  #bottom {
+    background-color: #FBFFE2;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    text-align: center;
+  }
+
+  #submit {
+    border-top: 1px solid black;
+  }
+
+  .listapp {
+    padding-top : 100px;
+    padding-left: 38%;
+    padding-right: 38%;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .nav {
+    background-color: #FFAFAF;
+  }
+
+  .navtext {
+    color: white;
+  }
+
+  .left{
+    flex: 1;
+    overflow: auto;
+    border-right: 1px solid black;
+    cursor: pointer;
+  }
+
+  .right{
+    flex: 1;
+    overflow: auto;
+    border-left: 1px solid black;
+    cursor: pointer;
+  }
+
+  .input {
+    background-color:  #FBFFE2;
+  }
+
+  form input,
+  form textarea,
+  form select {
+    width: 100%;
+    border: none;
+    padding: 4px;
+    outline: none;
+    font-size: 1.2em;
+    font-family: inherit;
+    resize: none;
+    text-align: center;
+  }
+
+  .crossed {
+    background: 
+        linear-gradient(to top left,
+            rgba(0,0,0,0) 0%,
+            rgba(0,0,0,0) calc(50% - 0.8px),
+            rgba(0,0,0,1) 50%,
+            rgba(0,0,0,0) calc(50% + 0.8px),
+            rgba(0,0,0,0) 100%),
+        linear-gradient(to top right,
+            rgba(0,0,0,0) 0%,
+            rgba(0,0,0,0) calc(50% - 0.8px),
+            rgba(0,0,0,1) 50%,
+            rgba(0,0,0,0) calc(50% + 0.8px),
+            rgba(0,0,0,0) 100%);
+}
+
+.darkened {
+  filter: brightness(50%)
+}
+
+#drop{
+  text-align: center;
+  align-items: center;
+}
