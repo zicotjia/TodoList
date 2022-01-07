@@ -10,7 +10,7 @@ function App() {
 
   const [tasks, setTask] = useState([]);
   const [categorylist, setCategoryList] = useState([]);
-  const [category, setCategory] = useState("All");
+  const [category, setCategory] = useState("ALL");
   const [isLoading, setIsLoading] = useState(false);
   const [showlist, setShowList] = useState(true);
   const [showadd, setShowAdd] = useState(false);
@@ -46,6 +46,7 @@ function App() {
     <div>
       <Header
         categorylist={categorylist}
+        setCategoryList={setCategoryList}
         category={category}
         setCategory={setCategory}
       />

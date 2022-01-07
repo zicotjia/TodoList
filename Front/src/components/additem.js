@@ -12,15 +12,12 @@ function Additem(props) {
       date: val[3].value,
       time: val[4].value,
     };
-    console.log(data.date);
-    console.log(data);
 
     await axios.post("http://localhost:8080/task/entry", data, {
       header: { "content-type/json": "application/json" },
     });
 
     props.setTask(props.tasks.push(data));
-    console.log(props.tasks);
     event.preventDefault();
   }
 
@@ -43,6 +40,7 @@ function Additem(props) {
           <label>
             Category:
             <select>
+              <option value="IMPORTANT">IMPORTANT</option>
               {props.categorylist.map((obj, index) => {
                 return (
                   <option key={index} value={obj.Category}>

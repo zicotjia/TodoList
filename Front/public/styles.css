@@ -83,6 +83,10 @@ Nav.Link{
     cursor: pointer;
   }
 
+  .left:hover{
+    color:green;
+  }
+
   .right{
     flex: 1;
     overflow: auto;
@@ -90,8 +94,20 @@ Nav.Link{
     cursor: pointer;
   }
 
+  .right:hover{
+    color:red;
+  }
+
   .input {
     background-color:  #FBFFE2;
+  }
+
+  .input2 {
+    background-color: #FFAFAF;
+  }
+
+  .input2:hover{
+    color: white !important;
   }
 
   form input,
@@ -107,7 +123,7 @@ Nav.Link{
     text-align: center;
   }
 
-  .crossed {
+  .crossed:hover {
     background: 
         linear-gradient(to top left,
             rgba(0,0,0,0) 0%,
@@ -123,11 +139,65 @@ Nav.Link{
             rgba(0,0,0,0) 100%);
 }
 
-.darkened {
+.darkened:hover {
   filter: brightness(50%)
 }
 
 #drop{
   text-align: center;
   align-items: center;
+}
+
+input::placeholder {
+  font-size: 16px;
+}
+
+.dropdown-item:hover {
+  background-color: #FFAFAF !important;
+  color: white !important;
+}
+
+.dropdown-item:focus{
+  background-color: #FFAFAF !important;
+  color: white !important;
+}
+
+.dropdown-item2:hover {
+  background-color: #FFAFAF !important;
+  color: red !important;
+}
+
+.dropdown-item2:focus{
+  background-color: #FFAFAF !important;
+  color: red !important;
+}
+
+
+.dropdown-menu{
+  background-color: #FFAFAF !important;
+}
+
+.nav-link:hover{
+  color: white !important;
+}
+
+.addcat{
+  display: flex;
+  flex-direction: column;
+}
+
+#addcat:hover{
+  color: green !important;
+}
+
+#delcat:hover{
+  color: red !important;
+}
+
+#addcat:focus{
+  color: green !important;
+}
+
+#delcat:focus{
+  color: red !important;
 }

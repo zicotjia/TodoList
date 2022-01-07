@@ -62,7 +62,6 @@ function Edititem(props) {
     });
 
     // props.setTask(props.tasks.push(entry));
-    event.preventDefault();
   }
 
   return (
@@ -85,6 +84,8 @@ function Edititem(props) {
           <label>
             Category:
             <select>
+              <option value="IMPORTANT">IMPORTANT</option>
+              <option value="COMPLETED">COMPLETED</option>
               {props.categorylist.map((obj, index) => {
                 return (
                   <option key={index} value={obj.Category}>
