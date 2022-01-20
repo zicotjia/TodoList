@@ -29,6 +29,7 @@ function List(props) {
               date={tasks.date}
               time={tasks.time}
               id={tasks.id}
+              userid={tasks.userid}
               showadd={props.showadd}
               setShowAdd={props.setShowAdd}
               deletemode={props.deletemode}

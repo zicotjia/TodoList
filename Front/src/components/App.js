@@ -27,6 +27,8 @@ function App() {
       });
       if (response.data) setTask(response.data);
       setIsLoading(false);
+      console.log("task here");
+      console.log(response.data);
     };
     getPosts();
   }, []);

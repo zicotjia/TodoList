@@ -11,6 +11,7 @@ function Additem(props) {
       id: 0,
       date: val[3].value,
       time: val[4].value,
+      userid: 1,
     };
 
     await axios.post("http://localhost:8080/task/entry", data, {

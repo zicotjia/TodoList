@@ -11,6 +11,7 @@ function Edititem(props) {
       id: props.editid,
       date: val[3].value,
       time: val[4].value,
+      userid: props.userid,
     };
     console.log(edit.date);
     //data = JSON.parse(JSON.stringify(data));

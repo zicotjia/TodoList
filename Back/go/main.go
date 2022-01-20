@@ -15,6 +15,20 @@ type acc struct {
 	Id       int    `json:"id"`
 }
 
+type tsk struct {
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	Category    string `json:"category"`
+	Id          int    `json:"id"`
+	Date        string `json:"date"`
+	Time        string `json:"time"`
+	UserId      int    `json:"userid""`
+}
+
+type categ struct {
+	Category string `json:Category`
+}
+
 //func HomePage(c *gin.Context) {
 //	c.JSON(200, gin.H{
 //		"message": "Hello World",
@@ -65,11 +79,11 @@ func main() {
 	//fmt.Printf("acc found: %v\n", accs)
 	//
 
-	allaccount, err := allAccount()
+	tasks, err := allTask()
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("all accs: %v\n", allaccount)
+	fmt.Println("all accs: %v\n", tasks)
 
 	//newacc, err := addaccount(acc{
 	//	Username: "Jo",
@@ -83,20 +97,24 @@ func main() {
 
 	r := gin.Default()
 	r.Use(cors.Default())
+
 	//config := cors.DefaultConfig()
 	//config.AllowOrigins = []string{"http://google.com", "http://localhost:3000"}
 
 	r.GET("/acc", getAllAccounts)
 	r.GET("/acc/:id", getAccountbyId)
 	r.POST("/entry", addaccount)
-	//r.GET("/query", QueryStrings)
+	r.GET("/task", getAllTask)
+	r.GET("/task/:id", getTaskbyId)
+	r.POST("/task/entry", addtask)
+	r.DELETE("/task/delete/:id", deleteTask)
+	r.PATCH("/task/entry/:id", updateTaskbyid)
+	r.GET("/categories", getAllCategories)
+	r.POST("/categories/entry", addCat)
+	r.DELETE("/categories/delete/:name", deleteCat)
 	//r.GET("/path/:name/:age", PathParameters)
 	//r.OPTIONS("/", PostHomePage)
 	//r.GET("/movies", getMovie)
+
 	r.Run("localhost:8080")
-
 }
-
-//func getAccount(c *gin.Context) {
-//	c.IndentedJSON(http.Statusok, acc)
-//}
