@@ -7,27 +7,10 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 	"log"
+	"main/src/config"
+	"main/src/middleware"
+	"os"
 )
-
-type acc struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Id       int    `json:"id"`
-}
-
-type tsk struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Category    string `json:"category"`
-	Id          int    `json:"id"`
-	Date        string `json:"date"`
-	Time        string `json:"time"`
-	UserId      int    `json:"userid""`
-}
-
-type categ struct {
-	Category string `json:Category`
-}
 
 //func HomePage(c *gin.Context) {
 //	c.JSON(200, gin.H{
@@ -47,28 +30,22 @@ type categ struct {
 //	})
 //}
 
-var db *sql.DB
-
 func main() {
 	var err error
 
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		log.Fatal("$PORT must be set")
+	}
 	fmt.Println("Hello")
 
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
-		"password=%s dbname=%s sslmode=disable",
-		"localhost", 5432, "postgres", "1945TONYzhu!!!", "postgres")
-
-	db, err = sql.Open("postgres", psqlInfo)
+	config.DB, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
 
 	if err != nil {
 		panic(err)
 	}
 	//defer db.Close()
-
-	pingErr := db.Ping()
-	if pingErr != nil {
-		panic(pingErr)
-	}
 
 	fmt.Println("successfully connected")
 
@@ -79,7 +56,7 @@ func main() {
 	//fmt.Printf("acc found: %v\n", accs)
 	//
 
-	tasks, err := allTask()
+	tasks, err := middleware.AllTask()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -101,20 +78,20 @@ func main() {
 	//config := cors.DefaultConfig()
 	//config.AllowOrigins = []string{"http://google.com", "http://localhost:3000"}
 
-	r.GET("/acc", getAllAccounts)
-	r.GET("/acc/:id", getAccountbyId)
-	r.POST("/entry", addaccount)
-	r.GET("/task", getAllTask)
-	r.GET("/task/:id", getTaskbyId)
-	r.POST("/task/entry", addtask)
-	r.DELETE("/task/delete/:id", deleteTask)
-	r.PATCH("/task/entry/:id", updateTaskbyid)
-	r.GET("/categories", getAllCategories)
-	r.POST("/categories/entry", addCat)
-	r.DELETE("/categories/delete/:name", deleteCat)
+	r.GET("/acc", middleware.GetAllAccounts)
+	r.GET("/acc/:id", middleware.GetAccountbyId)
+	r.POST("/entry", middleware.Addaccount)
+	r.GET("/task", middleware.GetAllTask)
+	r.GET("/task/:id", middleware.GetTaskbyId)
+	r.POST("/task/entry", middleware.Addtask)
+	r.DELETE("/task/delete/:id", middleware.DeleteTask)
+	r.PATCH("/task/entry/:id", middleware.UpdateTaskbyid)
+	r.GET("/categories", middleware.GetAllCategories)
+	r.POST("/categories/entry", middleware.AddCat)
+	r.DELETE("/categories/delete/:name", middleware.DeleteCat)
 	//r.GET("/path/:name/:age", PathParameters)
 	//r.OPTIONS("/", PostHomePage)
 	//r.GET("/movies", getMovie)
 
-	r.Run("localhost:8080")
+	r.Run(":" + port)
 }

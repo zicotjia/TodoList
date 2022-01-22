@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 
 function Header(props) {
+  var url = "https://murmuring-earth-95812.herokuapp.com/";
+
   const now = new Date().toLocaleTimeString();
 
   const [time, setTime] = useState(now);
@@ -29,9 +31,8 @@ function Header(props) {
     var newcat = {
       category: event.target[0].value.toUpperCase(),
     };
-    console.log(event.target[0].value);
 
-    await axios.post("http://localhost:8080/categories/entry", newcat, {
+    await axios.post(url + "categories/entry", newcat, {
       header: { "content-type/json": "application/json" },
     });
 
@@ -45,16 +46,13 @@ function Header(props) {
   }
 
   async function handleDel(event) {
-    console.log(event);
-
-    await axios.delete("http://localhost:8080/categories/delete/" + event, {
+    await axios.delete(url + "categories/delete/" + event, {
       mode: "cors",
     });
 
     props.setCategoryList(
       props.categorylist.filter((obj) => obj.Category !== event)
     );
-    console.log(props.categorylist);
   }
 
   return (

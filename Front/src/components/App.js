@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Additem from "./additem";
 import Edititem from "./edititem";
+import Task from "./task";
 
 function App() {
   const LOCAL_STORAGE_KEY = "tasks";
@@ -18,28 +19,28 @@ function App() {
   const [editmode, setEditMode] = useState(false);
   const [editid, setEditId] = useState(-1);
 
+  var url = "https://murmuring-earth-95812.herokuapp.com/";
+
   //Get saved posts from the database when the page first renders
   useEffect(() => {
     const getPosts = async () => {
+      console.log("Hello");
       setIsLoading(true);
-      const response = await axios.get("http://localhost:8080/task", {
+      const response = await axios.get(url + "task", {
         mode: "cors",
       });
       if (response.data) setTask(response.data);
       setIsLoading(false);
-      console.log("task here");
-      console.log(response.data);
     };
     getPosts();
   }, []);
 
   useEffect(() => {
     const getCats = async () => {
-      const res = await axios.get("http://localhost:8080/categories", {
+      const res = await axios.get(url + "categories", {
         mode: "cors",
       });
       if (res.data) setCategoryList(res.data);
-      console.log(tasks.id);
     };
     getCats();
   }, []);
@@ -81,7 +82,7 @@ function App() {
       {editmode && !showadd && (
         <Edititem
           setShowList={setShowList}
-          tasks={tasks}
+          data={tasks}
           setTask={setTask}
           editid={editid}
           setEditId={setEditId}

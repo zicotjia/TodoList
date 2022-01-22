@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 
 function Additem(props) {
+  var url = "https://murmuring-earth-95812.herokuapp.com/";
   async function handleSubmit(event) {
     const val = event.target;
     var data = {
@@ -14,7 +15,7 @@ function Additem(props) {
       userid: 1,
     };
 
-    await axios.post("http://localhost:8080/task/entry", data, {
+    await axios.post(url + "task/entry", data, {
       header: { "content-type/json": "application/json" },
     });
 

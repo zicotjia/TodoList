@@ -11,7 +11,6 @@ function Bottom(props) {
 
   function handleDel() {
     props.deletemode ? props.setDeleteMode(false) : props.setDeleteMode(true);
-    console.log("hello");
   }
 
   return (

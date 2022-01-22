@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function Task(props) {
+  var url = "https://murmuring-earth-95812.herokuapp.com/";
+
   const [hovered, setHovered] = useState(false);
   const [edititem, setEditItem] = useState(false);
 
@@ -15,7 +17,7 @@ function Task(props) {
 
   async function handleDel(event) {
     console.log(props.id);
-    await axios.delete("http://localhost:8080/task/delete/" + props.id, {
+    await axios.delete(url + "task/delete/" + props.id, {
       mode: "cors",
     });
     props.setTask(props.tasks.filter((task) => task.id !== props.id));
