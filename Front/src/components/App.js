@@ -4,12 +4,19 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Additem from "./additem";
 import Edititem from "./edititem";
-import Task from "./task";
+import LoadingSpin from "./LoadingSpin";
 
 function App() {
-  const LOCAL_STORAGE_KEY = "tasks";
+  const nowtime = new Date().toLocaleTimeString();
+  const nowdate = new Date().toLocaleTimeString(undefined, {
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+  });
 
   const [tasks, setTask] = useState([]);
+  const [time, setTime] = useState(nowtime);
+  const [date, setDate] = useState(nowdate);
   const [categorylist, setCategoryList] = useState([]);
   const [category, setCategory] = useState("ALL");
   const [isLoading, setIsLoading] = useState(false);
@@ -18,6 +25,7 @@ function App() {
   const [deletemode, setDeleteMode] = useState(false);
   const [editmode, setEditMode] = useState(false);
   const [editid, setEditId] = useState(-1);
+  const [currenttask, setCurrentTask] = useState([]);
 
   var url = "https://murmuring-earth-95812.herokuapp.com/";
 
@@ -34,7 +42,7 @@ function App() {
     };
     getPosts();
   }, []);
-
+  //ditto but for categories
   useEffect(() => {
     const getCats = async () => {
       const res = await axios.get(url + "categories", {
@@ -47,11 +55,16 @@ function App() {
 
   return (
     <div>
+      {isLoading && <LoadingSpin asOverlay />}
       <Header
         categorylist={categorylist}
         setCategoryList={setCategoryList}
         category={category}
         setCategory={setCategory}
+        time={time}
+        setTime={setTime}
+        date={date}
+        setDate={setDate}
       />
       <div className="listapp">
         {showlist && (
@@ -68,27 +81,31 @@ function App() {
             editid={editid}
             setEditId={setEditId}
             category={category}
+            currenttask={currenttask}
+            setCurrentTask={setCurrentTask}
+          />
+        )}
+
+        {showadd && !editmode && (
+          <Additem
+            setShowList={setShowList}
+            tasks={tasks}
+            setTask={setTask}
+            categorylist={categorylist}
+          />
+        )}
+        {editmode && !showadd && (
+          <Edititem
+            setShowList={setShowList}
+            data={tasks}
+            setTask={setTask}
+            editid={editid}
+            setEditId={setEditId}
+            categorylist={categorylist}
+            currenttask={currenttask}
           />
         )}
       </div>
-      {showadd && !editmode && (
-        <Additem
-          setShowList={setShowList}
-          tasks={tasks}
-          setTask={setTask}
-          categorylist={categorylist}
-        />
-      )}
-      {editmode && !showadd && (
-        <Edititem
-          setShowList={setShowList}
-          data={tasks}
-          setTask={setTask}
-          editid={editid}
-          setEditId={setEditId}
-          categorylist={categorylist}
-        />
-      )}
     </div>
   );
 }

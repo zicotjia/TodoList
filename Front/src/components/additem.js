@@ -15,12 +15,11 @@ function Additem(props) {
       userid: 1,
     };
 
-    await axios.post(url + "task/entry", data, {
-      header: { "content-type/json": "application/json" },
-    });
-
-    props.setTask(props.tasks.push(data));
-    event.preventDefault();
+    await axios
+      .post(url + "task/entry", data, {
+        header: { "content-type/json": "application/json" },
+      })
+      .then(() => props.setTask(props.tasks.push(data)));
   }
 
   return (
@@ -54,9 +53,9 @@ function Additem(props) {
           </label>
         </div>
 
-        <input className="input" type="date" name="date" placeholder="Date" />
+        <input className="input" type="date" name="date" />
 
-        <input className="input" type="time" name="time" placeholder="time" />
+        <input className="input" type="time" name="time" />
 
         <input className="input" id="submit" type="submit" value="Submit" />
       </form>

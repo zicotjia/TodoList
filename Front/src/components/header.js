@@ -1,4 +1,3 @@
-import { eventWrapper } from "@testing-library/user-event/dist/utils";
 import axios from "axios";
 import React, { useState } from "react";
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
@@ -6,17 +5,23 @@ import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 function Header(props) {
   var url = "https://murmuring-earth-95812.herokuapp.com/";
 
-  const now = new Date().toLocaleTimeString();
-
-  const [time, setTime] = useState(now);
   const [addcat, setAddCat] = useState(false);
   const [del, setDel] = useState(false);
 
   function updateTime() {
     const newTime = new Date().toLocaleTimeString();
-    setTime(newTime);
+    props.setTime(newTime);
+  }
+  function updateDate() {
+    const newDate = new Date().toLocaleDateString(undefined, {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+    });
+    props.setDate(newDate);
   }
   setInterval(updateTime, 1000);
+  setInterval(updateDate, 1000);
 
   function updateCat(event) {
     props.setCategory(event);
@@ -32,12 +37,11 @@ function Header(props) {
       category: event.target[0].value.toUpperCase(),
     };
 
-    await axios.post(url + "categories/entry", newcat, {
-      header: { "content-type/json": "application/json" },
-    });
-
-    props.setCategory(props.categorylist.push(newcat));
-    event.preventDefault();
+    await axios
+      .post(url + "categories/entry", newcat, {
+        header: { "content-type/json": "application/json" },
+      })
+      .then(props.setCategory(props.categorylist.push(newcat)));
   }
 
   function initdel(event) {
@@ -123,7 +127,10 @@ function Header(props) {
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>
-          <div className="time">{time}</div>
+          <div>
+            <h5>{props.date}</h5>
+            <h5>{props.time}</h5>
+          </div>
         </Container>
       </Navbar>
     </div>

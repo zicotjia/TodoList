@@ -16,16 +16,16 @@ function List(props) {
       </div>
 
       {tasks &&
-        tasks.map((tasks, index) => {
+        tasks.map((task, index) => {
           return (
             <Task
-              key={tasks.id}
-              title={tasks.title}
-              description={tasks.description}
-              date={tasks.date}
-              time={tasks.time}
-              id={tasks.id}
-              userid={tasks.userid}
+              key={task.id}
+              title={task.title}
+              description={task.description}
+              date={task.date}
+              time={task.time}
+              id={task.id}
+              userid={task.userid}
               showadd={props.showadd}
               setShowAdd={props.setShowAdd}
               deletemode={props.deletemode}
@@ -35,6 +35,8 @@ function List(props) {
               setEditMode={props.setEditMode}
               editid={props.editid}
               setEditId={props.setEditId}
+              currenttask={props.currenttask}
+              setCurrentTask={props.setCurrentTask}
             />
           );
         })}

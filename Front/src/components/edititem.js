@@ -4,133 +4,71 @@ import axios from "axios";
 function Edititem(props) {
   var url = "https://murmuring-earth-95812.herokuapp.com/";
 
-  async function editmaker(event) {
-    const val = event.target;
-    var edit = {
-      title: val[0].value,
-      description: val[1].value,
-      category: val[2].value,
-      id: props.editid,
-      date: val[3].value,
-      time: val[4].value,
-      userid: props.userid,
-    };
-    console.log("Begin");
-    //data = JSON.parse(JSON.stringify(data));
+  const current = props.currenttask;
 
-    // const current = await axios.get(url + "task/" + props.editid, {
-    //   mode: "cors",
-    // });
-
-    var current;
-
-    const data = props.data;
-
-    for (var i = 0; i < data.length; i++) {
-      if (data.id === props.editid) {
-        current = data;
+  function taskreplacement(newtask) {
+    for (var i = 0; i < props.tasks.length; i++) {
+      if (props.tasks[i].id === newtask.id) {
+        props.tasks[i] = newtask;
         break;
       }
     }
+  }
 
-    if (edit.title === "") {
-      edit.title = current.data.title;
+  function editmaker(event) {
+    const val = event.target;
+    var ftitle;
+    var fdescription;
+    var fdate;
+    var ftime;
+
+    if (val[0].value === "") {
+      ftitle = current.title;
     } else {
-      console.log("edited title");
+      ftitle = val[0].value;
     }
 
-    if (edit.description === "") {
-      edit.description = current.data.description;
+    if (val[1].value === "") {
+      fdescription = current.description;
     } else {
-      console.log("edited description");
+      fdescription = val[1].value;
     }
 
-    if (edit.category === "") {
-      edit.category = current.data.category;
+    if (val[3].value === "") {
+      fdate = current.date;
     } else {
-      console.log("edited category");
+      fdate = val[3].value;
     }
 
-    if (edit.date === "") {
-      edit.date = current.data.date;
+    if (val[4].value === "") {
+      ftime = current.time.substring(11, current.time.length - 4);
     } else {
-      console.log("edited date");
+      ftime = val[4].value;
     }
 
-    if (edit.time === "") {
-      edit.time = current.data.time;
-    } else {
-      console.log("edited time");
-    }
+    var edit = {
+      title: ftitle,
+      description: fdescription,
+      category: val[2].value,
+      id: current.id,
+      date: fdate,
+      time: ftime,
+      userid: current.userid,
+    };
 
-    edit.time = edit.time.substring(11, edit.time.length - 4);
     edit.date = new Date(edit.date).toLocaleDateString();
-
     return edit;
   }
 
   async function handleEditSubmit(event) {
-    // const val = event.target;
-    // var edit = {
-    //   title: val[0].value,
-    //   description: val[1].value,
-    //   category: val[2].value,
-    //   id: props.editid,
-    //   date: val[3].value,
-    //   time: val[4].value,
-    //   userid: props.userid,
-    // };
-    // console.log("Begin");
-    // //data = JSON.parse(JSON.stringify(data));
-
-    // const current = await axios.get(url + "task/" + props.editid, {
-    //   mode: "cors",
-    // });
-
-    // console.log(current.data);
-
-    // if (edit.title === "") {
-    //   edit.title = current.data.title;
-    // } else {
-    //   console.log("edited title");
-    // }
-
-    // if (edit.description === "") {
-    //   edit.description = current.data.description;
-    // } else {
-    //   console.log("edited description");
-    // }
-
-    // if (edit.category === "") {
-    //   edit.category = current.data.category;
-    // } else {
-    //   console.log("edited category");
-    // }
-
-    // if (edit.date === "") {
-    //   edit.date = current.data.date;
-    // } else {
-    //   console.log("edited date");
-    // }
-
-    // if (edit.time === "") {
-    //   edit.time = current.data.time;
-    // } else {
-    //   console.log("edited time");
-    // }
-
-    // edit.time = edit.time.substring(11, edit.time.length - 4);
-    // edit.date = new Date(edit.date).toLocaleDateString();
-
-    // console.log("end");
-
     const edit = await editmaker(event);
-    console.log(edit);
-    axios.patch(url + "task/entry/" + props.editid, edit, {
-      header: { "content-type/json": "application/json" },
-    });
 
-    // props.setTask(props.tasks.push(entry));
+    console.log(edit);
+    axios
+      .patch(url + "task/entry/" + current.id, edit, {
+        header: { "content-type/json": "application/json" },
+      })
+      .then(() => taskreplacement(edit));
   }
 
   return (
@@ -140,19 +78,24 @@ function Edititem(props) {
           <h2>Edit Task</h2>
         </div>
 
-        <input className="input" type="text" name="title" placeholder="Title" />
+        <input
+          className="input"
+          type="text"
+          name="title"
+          placeholder={props.currenttask.title}
+        />
 
         <input
           className="input"
           type="text"
           name="description"
-          placeholder="Description"
+          placeholder={props.currenttask.description}
         />
 
         <div className="input" id="drop">
           <label>
             Category:
-            <select>
+            <select placeholder={props.currenttask.category}>
               <option value="IMPORTANT">IMPORTANT</option>
               <option value="COMPLETED">COMPLETED</option>
               {props.categorylist.map((obj, index) => {
@@ -166,9 +109,19 @@ function Edititem(props) {
           </label>
         </div>
 
-        <input className="input" type="date" name="date" placeholder="Date" />
+        <input
+          className="input"
+          type="date"
+          name="date"
+          placeholder="dd-mm-yyyy"
+        />
 
-        <input className="input" type="time" name="time" placeholder="time" />
+        <input
+          className="input"
+          type="time"
+          name="time"
+          placeholder={props.currenttask.time}
+        />
 
         <input className="input" id="submit" type="submit" value="Submit" />
       </form>
