@@ -17,27 +17,26 @@ function Task(props) {
   times = times.substring(11, times.length - 4);
   times = "2020-01-01T" + times;
 
-  //ftimes is formatted for display
+  //to be used for display
   var ftimes = new Date(times).toLocaleTimeString(undefined, {
     hour: "2-digit",
     minute: "2-digit",
   });
 
-  //date of task deadline
+  //day of deadline of task
   var taskday = new Date(props.date).toLocaleDateString();
-
   var presentday = new Date().toLocaleDateString();
 
-  //check if past deadline day or is deadline day
+  //check if today is deadline day
   const sameday = presentday === taskday;
+  //check if deadline is past today
   const pastday = presentday > taskday;
 
-  //time of task deadline
+  //time of deadline
   var tasktime = new Date(times);
-
   var presenttime = new Date();
 
-  //check is past deadline time
+  //check if deadline is past current time
   const pasttime =
     tasktime.getHours() < presenttime.getHours() ||
     (tasktime.getHours() === presenttime.getHours() &&
@@ -46,6 +45,7 @@ function Task(props) {
       tasktime.getMinutes() === presenttime.getMinutes() &&
       tasktime.getSeconds() < presenttime.getSeconds());
 
+  //check if deadline is past
   const pastdeadline = (sameday && pasttime) || pastday;
 
   function toggleHoverOn() {
@@ -63,7 +63,7 @@ function Task(props) {
     props.setTask(props.tasks.filter((task) => task.id !== props.id));
   }
 
-  // initiate editmode
+  //initiate edit mode
   function initEdit() {
     if (!props.showadd) {
       props.setEditMode(!props.editmode);
@@ -76,9 +76,9 @@ function Task(props) {
           break;
         }
       }
-      //make the task to be edited available to other components
+      //allow other component to access highlighted task
       props.setCurrentTask(current);
-      //make the task be in edited state or not for highlighting
+      //highlight item to edit
       setEditItem(!edititem);
     } else {
       console.log("cant do that");
