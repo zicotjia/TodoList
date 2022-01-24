@@ -24,11 +24,12 @@ function Task(props) {
   });
 
   //day of deadline of task
-  var taskday = new Date(props.date).toLocaleDateString();
-  var presentday = new Date().toLocaleDateString();
+  var taskday = new Date(props.date);
+  var presentday = new Date();
 
   //check if today is deadline day
-  const sameday = presentday === taskday;
+  const sameday =
+    presentday.toLocaleDateString() === taskday.toLocaleDateString();
   //check if deadline is past today
   const pastday = presentday > taskday;
 
@@ -46,7 +47,7 @@ function Task(props) {
       tasktime.getSeconds() < presenttime.getSeconds());
 
   //check if deadline is past
-  const pastdeadline = (sameday && pasttime) || pastday;
+  const pastdeadline = (sameday && pasttime) || (pastday && !sameday);
 
   function toggleHoverOn() {
     setHovered(true);
@@ -57,6 +58,7 @@ function Task(props) {
   }
 
   async function handleDel(event) {
+    props.setEditMode(false);
     await axios.delete(url + "task/delete/" + props.id, {
       mode: "cors",
     });

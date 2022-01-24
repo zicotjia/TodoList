@@ -93,7 +93,11 @@ function Edititem(props) {
           className="input"
           type="text"
           name="description"
-          placeholder={props.currenttask.description}
+          placeholder={
+            props.currenttask.description === ""
+              ? "Description"
+              : props.currenttask.description
+          }
         />
 
         <div className="input" id="drop">

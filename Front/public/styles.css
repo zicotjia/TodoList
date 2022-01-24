@@ -171,6 +171,11 @@ header {
             rgba(0,0,0,0) 100%);
 }
 
+.darkened {
+  filter: brightness(50%)
+}
+
+
 .darkened:hover {
   filter: brightness(50%)
 }
