@@ -6,6 +6,7 @@ function Edititem(props) {
 
   const current = props.currenttask;
 
+  //replace old task with edited version
   function taskreplacement(newtask) {
     for (var i = 0; i < props.tasks.length; i++) {
       if (props.tasks[i].id === newtask.id) {
@@ -15,6 +16,7 @@ function Edititem(props) {
     }
   }
 
+  //create an edited task after edit submission
   function editmaker(event) {
     const val = event.target;
     var ftitle;
@@ -60,6 +62,7 @@ function Edititem(props) {
     return edit;
   }
 
+  //Patch request edited item
   async function handleEditSubmit(event) {
     const edit = await editmaker(event);
 
@@ -69,6 +72,7 @@ function Edititem(props) {
         header: { "content-type/json": "application/json" },
       })
       .then(() => taskreplacement(edit));
+    //immediately update task instead of calling GET
   }
 
   return (

@@ -8,10 +8,13 @@ function Header(props) {
   const [addcat, setAddCat] = useState(false);
   const [del, setDel] = useState(false);
 
+  //for in app clock
   function updateTime() {
     const newTime = new Date().toLocaleTimeString();
     props.setTime(newTime);
   }
+
+  //for in app date
   function updateDate() {
     const newDate = new Date().toLocaleDateString(undefined, {
       year: "numeric",
@@ -27,6 +30,7 @@ function Header(props) {
     props.setCategory(event);
   }
 
+  //initiate add mode but for category
   function initadd(event) {
     setAddCat(!addcat);
     event.stopPropagation();
@@ -42,6 +46,7 @@ function Header(props) {
         header: { "content-type/json": "application/json" },
       })
       .then(props.setCategory(props.categorylist.push(newcat)));
+    //immediately update category list
   }
 
   function initdel(event) {

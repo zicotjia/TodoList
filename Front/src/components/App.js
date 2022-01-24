@@ -7,6 +7,7 @@ import Edititem from "./edititem";
 import LoadingSpin from "./LoadingSpin";
 
 function App() {
+  //useful constant
   const nowtime = new Date().toLocaleTimeString();
   const nowdate = new Date().toLocaleTimeString(undefined, {
     year: "numeric",
@@ -14,6 +15,7 @@ function App() {
     day: "2-digit",
   });
 
+  //state declaration
   const [tasks, setTask] = useState([]);
   const [time, setTime] = useState(nowtime);
   const [date, setDate] = useState(nowdate);

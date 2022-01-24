@@ -17,20 +17,27 @@ function Task(props) {
   times = times.substring(11, times.length - 4);
   times = "2020-01-01T" + times;
 
+  //ftimes is formatted for display
   var ftimes = new Date(times).toLocaleTimeString(undefined, {
     hour: "2-digit",
     minute: "2-digit",
   });
 
+  //date of task deadline
   var taskday = new Date(props.date).toLocaleDateString();
+
   var presentday = new Date().toLocaleDateString();
 
+  //check if past deadline day or is deadline day
   const sameday = presentday === taskday;
   const pastday = presentday > taskday;
 
+  //time of task deadline
   var tasktime = new Date(times);
+
   var presenttime = new Date();
 
+  //check is past deadline time
   const pasttime =
     tasktime.getHours() < presenttime.getHours() ||
     (tasktime.getHours() === presenttime.getHours() &&
@@ -56,6 +63,7 @@ function Task(props) {
     props.setTask(props.tasks.filter((task) => task.id !== props.id));
   }
 
+  // initiate editmode
   function initEdit() {
     if (!props.showadd) {
       props.setEditMode(!props.editmode);
@@ -68,7 +76,9 @@ function Task(props) {
           break;
         }
       }
+      //make the task to be edited available to other components
       props.setCurrentTask(current);
+      //make the task be in edited state or not for highlighting
       setEditItem(!edititem);
     } else {
       console.log("cant do that");

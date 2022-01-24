@@ -14,7 +14,7 @@ func AllTask() ([]tsk, error) {
 	}
 	defer rows.Close()
 
-	// Loop through rows, using Scan to assign column data to struct fields.
+	// Loop through rows, using Scan to assign column data to task to be returned
 	for rows.Next() {
 		var task tsk
 		if err := rows.Scan(&task.Title, &task.Description, &task.Category, &task.Id, &task.Date, &task.Time, &task.UserId); err != nil {

@@ -26,7 +26,7 @@ type tsk struct {
 }
 
 type categ struct {
-	Category string `json:Category`
+	Category string `json:"Category"`
 }
 
 func GetAllAccounts(c *gin.Context) {
@@ -48,13 +48,14 @@ func GetAccountbyId(c *gin.Context) {
 	}
 	accs, _ := allAccount()
 
+	//loop through all account until desired account is found
 	for _, a := range accs {
 		if a.Id == id {
 			c.IndentedJSON(http.StatusOK, a)
 			return
 		}
 	}
-	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "account not found"})
 }
 
 func GetTaskbyId(c *gin.Context) {
@@ -66,49 +67,48 @@ func GetTaskbyId(c *gin.Context) {
 	}
 	tasks, _ := AllTask()
 
+	//loop through all task until desired task is found
 	for _, a := range tasks {
 		if a.Id == id {
 			c.IndentedJSON(http.StatusOK, a)
 			return
 		}
 	}
-	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "task not found"})
 }
 
 func Addtask(c *gin.Context) {
 	var task tsk
 	c.BindJSON(&task)
-	fmt.Println(&task)
+
 	_, err := config.DB.Exec("INSERT INTO task values ($1, $2, $3, Default, $4, $5, $6)",
 		task.Title, task.Description, task.Category, task.Date, task.Time, task.UserId)
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println("updated tasks db")
+
 	return
 }
 
 func DeleteTask(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
+
 	if err != nil {
 		// handle error
 		fmt.Println(err)
 		os.Exit(2)
 	}
+
 	_, err2 := config.DB.Query("DELETE FROM task WHERE id = $1", id)
 	if err2 != nil {
 		fmt.Println(err2)
 	}
-	fmt.Println("deleted task")
 
 }
 
 func UpdateTaskbyid(c *gin.Context) {
 	var edit tsk
-	fmt.Println("Hello")
 	c.BindJSON(&edit)
-	fmt.Println(&edit)
-	fmt.Println(edit.Title)
 
 	id, err := strconv.Atoi(c.Param("id"))
 
@@ -116,12 +116,14 @@ func UpdateTaskbyid(c *gin.Context) {
 		fmt.Println(err)
 		os.Exit(2)
 	}
+
 	_, err2 := config.DB.Exec("UPDATE task SET (title, description, category, date, time) = ($1, $2, $3, $4, $5) WHERE id = $6",
 		edit.Title, edit.Description, edit.Category, edit.Date, edit.Time, id)
+
 	if err2 != nil {
 		fmt.Println(err2)
 	}
-	fmt.Println("edited task")
+
 }
 
 func GetAllCategories(c *gin.Context) {
@@ -147,8 +149,6 @@ func DeleteCat(c *gin.Context) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println("deleted category")
 
 }
 
-//&{test3 Use Detergent Chores 11 2/22/2222 01:31}

@@ -3,6 +3,8 @@ import axios from "axios";
 
 function Additem(props) {
   var url = "https://murmuring-earth-95812.herokuapp.com/";
+
+  //submit new entry
   async function handleSubmit(event) {
     const val = event.target;
     var data = {
@@ -20,6 +22,7 @@ function Additem(props) {
         header: { "content-type/json": "application/json" },
       })
       .then(() => props.setTask(props.tasks.push(data)));
+    //immediately add new task without calling new GET request to backend
   }
 
   return (

@@ -4,11 +4,14 @@ import Bottom from "./bottom";
 
 function List(props) {
   var tasks;
+
+  //filter tasks by category
   if (props.category !== "ALL") {
     tasks = props.data.filter((data) => data.category === props.category);
   } else {
     tasks = props.data.filter((data) => data.category !== "COMPLETED");
   }
+
   return (
     <div className="flex">
       <div className="Box" id="heading">
