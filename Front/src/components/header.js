@@ -62,6 +62,8 @@ function Header(props) {
     props.setCategoryList(
       props.categorylist.filter((obj) => obj.Category !== event)
     );
+
+    props.setDel(false);
   }
 
   return (
