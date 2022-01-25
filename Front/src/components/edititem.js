@@ -64,7 +64,7 @@ function Edititem(props) {
 
   //Patch request edited item
   async function handleEditSubmit(event) {
-    const edit = await editmaker(event);
+    const edit = editmaker(event);
 
     console.log(edit);
     axios
