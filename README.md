@@ -1,6 +1,4 @@
 # TodoList
+Simple To-do list app using React frontend and Golang backend
 
-Name: Zico
-Matriculation Number: A0239156Y
-
-Link for app is hidden for now
+This app is available in https://afternoon-chamber-88668.herokuapp.com/
